@@ -14,7 +14,12 @@ module TicketMaster::Provider
     # parameters to access the API
     def authorize(auth = {})
       @authentication ||= TicketMaster::Authenticator.new(auth)
-      # Set authentication parameters for whatever you're using to access the API
+      auth = @authentication
+      if auth.username.nil? or auth.password.nil?
+        raise "Please provide username and password"
+      end
+      CodasetAPI.protocol = auth.protocol if auth.protocol?
+      CodasetAPI.authenticate(auth.username, auth.password)
     end
     
     # declare needed overloaded methods here
