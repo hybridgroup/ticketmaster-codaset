@@ -4,7 +4,7 @@ module TicketMaster::Provider
     #
     
     class Ticket < TicketMaster::Provider::Base::Ticket
-      API = Codaset::Ticket # The class to access the api's tickets
+      API = CodasetAPI::Ticket # The class to access the api's tickets
       # declare needed overloaded methods here
       alias_method :project_slug, :project_id
       
@@ -16,21 +16,13 @@ module TicketMaster::Provider
         @updated_at ||= self[:updated_at] ? Time.parse(self[:updated_at]) : nil
       end
       
-      def save
-        
-      end
-      
-      def destroy
-        
-      end
-      
       def project_id
         self.prefix_options[:project_id]
       end
       
       def assignee
         @assignee ||= begin
-          UnfuddleAPI::People.find(self[:assignee_id]).username
+          CodasetAPI::User.find(self[:assignee_id]).username
           rescue
           ''
           end

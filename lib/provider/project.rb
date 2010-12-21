@@ -7,18 +7,6 @@ module TicketMaster::Provider
       API = Codaset::Project # The class to access the api's projects
       # declare needed overloaded methods here
       
-      def save
-      
-      end
-      
-      def update
-      
-      end
-      
-      def destroy
-        
-      end
-      
       def created_at
         @created_at ||= self[:created_at] ? Time.parse(self[:created_at]) : nil
       end
