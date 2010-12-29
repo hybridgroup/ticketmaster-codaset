@@ -1,12 +1,13 @@
 module TicketMaster::Provider
   module Codaset
     # Ticket class for ticketmaster-codaset
-    #
+    # * project_id (prefix_options[:project_id])
     
     class Ticket < TicketMaster::Provider::Base::Ticket
+      alias_method :project_slug, :project_id
+      attr_accessor :prefix_options
       API = CodasetAPI::Ticket # The class to access the api's tickets
       # declare needed overloaded methods here
-      alias_method :project_slug, :project_id
       
       def created_at
         @created_at ||= self[:created_at] ? Time.parse(self[:created_at]) : nil
@@ -18,14 +19,6 @@ module TicketMaster::Provider
       
       def project_id
         self.prefix_options[:project_id]
-      end
-      
-      def assignee
-        @assignee ||= begin
-          CodasetAPI::User.find(self[:assignee_id]).username
-          rescue
-          ''
-          end
       end
       
     end

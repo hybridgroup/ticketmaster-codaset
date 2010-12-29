@@ -17,7 +17,6 @@ module TicketMaster::Provider
       
       def initialize(*options)
         super(*options)
-        self.id = self.id.to_i
       end
       
       # copy from this.copy(that) copies that into this
