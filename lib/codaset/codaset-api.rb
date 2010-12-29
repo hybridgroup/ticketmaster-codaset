@@ -14,9 +14,9 @@ module CodasetAPI
   
   class Error < StandardError; end
   class << self
-    attr_accessor :username, :password, :host_format, :domain_format, :protocol
+    attr_accessor :username, :password, :host_format, :domain_format, :protocol, :site, :token, :client_id, :client_secret
     
-    def authenticate(username, password)
+    def authenticate(username, password, client_id, client_secret)
       @username = username
       @password = password
       @site = 'https://api.codaset.com'
@@ -25,26 +25,29 @@ module CodasetAPI
       self::Base.password = password
       self::Base.site = @site
       
+      self.client_id = client_id
+      self.client_secret = client_secret
+      
       self.token = access_token(self)
      
     end
     
     def access_token(master)
-      consumer = OAuth2::Client.new('07f16ec71c324ab053885212ad65a6cc8f34ac6e57ecb8412235ad406fc2c49c',
-                                    '442fe0b16ff1143602e89ea923cbabc50342ab949a4b9c337905b9231236bdef',
-                                     {:site => 
+      consumer = OAuth2::Client.new(master.client_id,
+                                    master.client_secret,
+                                    {:site => 
                                               {:url => master.site, 
                                                :ssl => {:verify => OpenSSL::SSL::VERIFY_NONE,
                                                         :ca_file => nil
                                                        },
                                                :adapter => :NetHttp
                                               },
-                                      :authorize_url => '/authorization/token',
-                                      :parse_json => true})
+                                    :authorize_url => '/authorization/token',
+                                    :parse_json => true})
                                       
       response = consumer.request(:post, auth_url, {:grant_type => 'password', 
-                                                    :client_id => '07f16ec71c324ab053885212ad65a6cc8f34ac6e57ecb8412235ad406fc2c49c',
-                                                    :client_secret => '442fe0b16ff1143602e89ea923cbabc50342ab949a4b9c337905b9231236bdef',
+                                                    :client_id => master.client_id,
+                                                    :client_secret => master.client_secret,
                                                     :username => master.user, 
                                                     :password => master.password},
                                                     'Content-Type' => 'application/x-www-form-urlencoded')
