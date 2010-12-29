@@ -3,7 +3,6 @@ require 'active_support'
 require 'active_resource'
 require 'oauth2'
 require 'net/https'
-require 'json'
 
 # Ruby lib for working with the Codaset API's JSON interface.
 
