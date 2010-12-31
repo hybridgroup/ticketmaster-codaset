@@ -13,11 +13,11 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "ticketmaster-codaset"
-  gem.homepage = "http://github.com/anymoto/ticketmaster-codaset"
+  gem.homepage = "http://github.com/hybridgroup/ticketmaster-codaset"
   gem.license = "MIT"
   gem.summary = %Q{The codaset provider for ticketmaster}
   gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "any.chikimoto@gmail.com"
+  gem.email = "ana@hybridgroup.com"
   gem.authors = ["anymoto"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)

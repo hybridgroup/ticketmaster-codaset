@@ -4,7 +4,6 @@ module TicketMaster::Provider
     # * project_id (prefix_options[:project_id])
     
     class Ticket < TicketMaster::Provider::Base::Ticket
-      alias_method :project_slug, :project_id
       attr_accessor :prefix_options
       API = CodasetAPI::Ticket # The class to access the api's tickets
       # declare needed overloaded methods here

@@ -13,17 +13,15 @@ require 'net/https'
 module CodasetAPI
   
   class Error < StandardError; end
+  
   class << self
-    attr_accessor :username, :password, :host_format, :domain_format, :protocol, :site, :token, :client_id, :client_secret
-    
+   attr_accessor :client_id, :client_secret
     def authenticate(username, password, client_id, client_secret)
       @username = username
       @password = password
-      @site = 'https://api.codaset.com'
-      
+     
       self::Base.user = username
       self::Base.password = password
-      self::Base.site = @site
       
       self.client_id = client_id
       self.client_secret = client_secret
@@ -66,15 +64,12 @@ module CodasetAPI
     def resources
       @resources ||= []
     end
-
-  self.host_format   = '%s://%s%s/'
-  self.domain_format = '%s.api.codaset.com'
-  self.protocol      = 'http' 
-  
-end
+ 
+  end
     
   class Base < ActiveResource::Base
       self.format = :json
+      self.site = 'https://api.codaset.com'
       def self.inherited(base)
         CodasetAPI.resources << base
         super
@@ -108,7 +103,7 @@ end
   
   class Project < Base
     def tickets(options = {})
-      Ticket.find(:all, :params => options.update(:project_id => id))
+      Ticket.find(:all, :params => options.update(:project_slug => id))
     end  
   end
   
@@ -126,7 +121,7 @@ end
   #
   
   class Ticket < Base
-    site_format << '/:username/projects/:project_id'
+    self.site += '/:username/:project_slug/'
   end
     
 end
