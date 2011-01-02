@@ -13,24 +13,26 @@ require 'net/https'
 module CodasetAPI
   
   class Error < StandardError; end
-  
   class << self
-   attr_accessor :client_id, :client_secret
+   attr_accessor :client_id, :client_secret, :site, :username, :password
+    
     def authenticate(username, password, client_id, client_secret)
       @username = username
       @password = password
-     
+      @client_id = client_id
+      @client_secret = client_secret
+      @site = 'https://api.codaset.com'
+      
       self::Base.user = username
       self::Base.password = password
-      
-      self.client_id = client_id
-      self.client_secret = client_secret
-      
+      self::Base.site = @site
+     
       self.token = access_token(self)
      
     end
     
     def access_token(master)
+      @auth_url = '/authorization/token'
       consumer = OAuth2::Client.new(master.client_id,
                                     master.client_secret,
                                     {:site => 
@@ -40,23 +42,31 @@ module CodasetAPI
                                                        },
                                                :adapter => :NetHttp
                                               },
-                                    :authorize_url => '/authorization/token',
+                                    :authorize_url => @auth_url,
                                     :parse_json => true})
                                       
-      response = consumer.request(:post, auth_url, {:grant_type => 'password', 
+      response = consumer.request(:post, @auth_url, {:grant_type => 'password', 
                                                     :client_id => master.client_id,
                                                     :client_secret => master.client_secret,
-                                                    :username => master.user, 
+                                                    :username => master.username, 
                                                     :password => master.password},
                                                     'Content-Type' => 'application/x-www-form-urlencoded')
 
       OAuth2::AccessToken.new(consumer, response['access_token'])
     
     end
+   
+    def client_id=(value)
+      @client_id = value
+    end
+    
+    def client_secret=(value)
+      @client_secret = value
+    end
     
     def token=(value)
       resources.each do |klass|
-        klass.headers['Authorization'] = 'OAuth ' + value.chomp!
+        klass.headers['Authorization'] = 'OAuth ' + value.to_s
       end
       @token = value
     end
