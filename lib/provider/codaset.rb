@@ -18,6 +18,7 @@ module TicketMaster::Provider
       if auth.username.nil? or auth.password.nil? or auth.client_id.nil? or auth.client_secret.nil?
         raise "Please provide username, password, client id and client secret"
       end
+      CodasetAPI.account = auth.username
       CodasetAPI.authenticate(auth.username, auth.password, auth.client_id, auth.client_secret)
     end
     

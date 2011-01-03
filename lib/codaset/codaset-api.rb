@@ -14,7 +14,8 @@ module CodasetAPI
   
   class Error < StandardError; end
   class << self
-   attr_accessor :client_id, :client_secret, :site, :username, :password
+   attr_accessor :client_id, :client_secret, :site, :username, :password, :host_format, :domain_format, :protocol
+   attr_reader :account
     
     def authenticate(username, password, client_id, client_secret)
       @username = username
@@ -29,6 +30,14 @@ module CodasetAPI
      
       self.token = access_token(self)
      
+    end
+    
+     # Sets the account name, and updates all the resources with the new domain.
+    def account=(name)
+      resources.each do |klass|
+        klass.site = klass.site_format % (host_format % [protocol, domain_format, name])
+      end
+      @account = name
     end
     
     def access_token(master)
@@ -55,15 +64,7 @@ module CodasetAPI
       OAuth2::AccessToken.new(consumer, response['access_token'])
     
     end
-   
-    def client_id=(value)
-      @client_id = value
-    end
-    
-    def client_secret=(value)
-      @client_secret = value
-    end
-    
+       
     def token=(value)
       resources.each do |klass|
         klass.headers['Authorization'] = 'OAuth ' + value.to_s
@@ -74,14 +75,22 @@ module CodasetAPI
     def resources
       @resources ||= []
     end
- 
+  
   end
+  
+  self.host_format   = '%s://%s/%s'
+  self.domain_format = 'api.codaset.com'
+  self.protocol      = 'https'
+  
     
   class Base < ActiveResource::Base
-      self.format = :json
       self.site = 'https://api.codaset.com'
       def self.inherited(base)
         CodasetAPI.resources << base
+        class << base
+          attr_accessor :site_format
+        end
+        base.site_format = '%s'
         super
       end
   end
@@ -113,7 +122,7 @@ module CodasetAPI
   
   class Project < Base
     def tickets(options = {})
-      Ticket.find(:all, :params => options.update(:project_slug => id))
+      Ticket.find(:all, :params => options.update(:slug => id))
     end  
   end
   
@@ -131,7 +140,7 @@ module CodasetAPI
   #
   
   class Ticket < Base
-    self.site += '/:username/:project_slug/'
+    self.site += '/:project_slug/'
   end
     
 end
