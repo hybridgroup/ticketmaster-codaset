@@ -84,6 +84,7 @@ module CodasetAPI
   
     
   class Base < ActiveResource::Base
+      self.format = :json
       self.site = 'https://api.codaset.com'
       def self.inherited(base)
         CodasetAPI.resources << base
@@ -93,12 +94,13 @@ module CodasetAPI
         base.site_format = '%s'
         super
       end
+     
   end
   
   # Find projects
   #
   #   CodasetAPI::Project.find(:all) # find all projects for the current account.
-  #   CodasetAPI::Project.find(44)   # find individual project by ID
+  #   CodasetAPI::Project.find('my-project')   # find individual project by slug
   #
   # Creating a Project
   #
@@ -109,20 +111,26 @@ module CodasetAPI
   #
   # Updating a Project
   #
-  #   project = CodasetAPI::Project.find(44)
+  #   project = CodasetAPI::Project.find('my-project')
   #   project.name = "Codaset Issues"
   #   project.public = false
   #   project.save
   #
   # Finding tickets
   # 
-  #   project = CodasetAPI::Project.find(44)
+  #   project = CodasetAPI::Project.find('my-project')
   #   project.tickets
   #
   
   class Project < Base
+    
+    def self.element_path(id, prefix_options = {}, query_options = nil)
+        prefix_options, query_options = split_options(prefix_options) if query_options.nil?
+        "#{prefix(prefix_options)}/#{id}/#{query_string(query_options)}"
+    end
+    
     def tickets(options = {})
-      Ticket.find(:all, :params => options.update(:slug => id))
+      Ticket.find(:all, :params => options.update(:slug => slug))
     end  
   end
   
@@ -140,7 +148,7 @@ module CodasetAPI
   #
   
   class Ticket < Base
-    self.site += '/:project_slug/'
+    self.site += '/:slug/tickets/'
   end
     
 end
