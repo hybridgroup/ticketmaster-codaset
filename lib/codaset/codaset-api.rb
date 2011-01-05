@@ -14,7 +14,7 @@ module CodasetAPI
   
   class Error < StandardError; end
   class << self
-   attr_accessor :client_id, :client_secret, :site, :username, :password, :host_format, :domain_format, :protocol
+   attr_accessor :client_id, :client_secret, :site, :username, :password, :host_format, :domain_format, :protocol, :token
    attr_reader :account
     
     def authenticate(username, password, client_id, client_secret)
@@ -29,7 +29,7 @@ module CodasetAPI
       self::Base.site = @site
      
       self.token = access_token(self)
-     
+    
     end
     
      # Sets the account name, and updates all the resources with the new domain.
@@ -61,7 +61,7 @@ module CodasetAPI
                                                     :password => master.password},
                                                     'Content-Type' => 'application/x-www-form-urlencoded')
 
-      OAuth2::AccessToken.new(consumer, response['access_token'])
+      OAuth2::AccessToken.new(consumer, response['access_token']).token
     
     end
        
@@ -84,8 +84,10 @@ module CodasetAPI
   
     
   class Base < ActiveResource::Base
+    
       self.format = :json
       self.site = 'https://api.codaset.com'
+     
       def self.inherited(base)
         CodasetAPI.resources << base
         class << base
@@ -94,7 +96,7 @@ module CodasetAPI
         base.site_format = '%s'
         super
       end
-     
+      
   end
   
   # Find projects
@@ -148,7 +150,7 @@ module CodasetAPI
   #
   
   class Ticket < Base
-    self.site += '/:slug/tickets/'
+    site_format << '/:slug/'
   end
     
 end
