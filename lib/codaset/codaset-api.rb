@@ -10,6 +10,7 @@ require 'net/https'
 # http://api.codaset.com
 #
 
+
 module CodasetAPI
   
   class Error < StandardError; end
@@ -84,7 +85,6 @@ module CodasetAPI
   
     
   class Base < ActiveResource::Base
-    
       self.format = :json
       self.site = 'https://api.codaset.com'
      
@@ -126,6 +126,7 @@ module CodasetAPI
   
   class Project < Base
 
+    #begin monkey patches
     def self.element_path(id, prefix_options = {}, query_options = nil)
        prefix_options, query_options = split_options(prefix_options) if query_options.nil?
        "#{prefix(prefix_options)}#{URI.escape id.to_s}.#{format.extension}#{query_string(query_options)}"
@@ -134,10 +135,27 @@ module CodasetAPI
     def element_path(options = nil)
       self.class.element_path(self.slug, options)
     end
+
+   def encode(options={})
+     val = []
+     attributes.each_pair do |key, value|
+       val << "values[#{URI.escape key}]=#{URI.escape value}"
+     end
+     val.join('&')
+   end
+   
+   def create
+      connection.post(collection_path + '?' + encode, nil, self.class.headers).tap do |response|
+        self.id = id_from_response(response)
+        load_attributes_from_response(response)
+      end
+    end
+
+    #end monkey patches
     
     def tickets(options = {})
       Ticket.find(:all, :params => options.update(:slug => slug))
-    end  
+    end
   end
   
   # Find tickets
