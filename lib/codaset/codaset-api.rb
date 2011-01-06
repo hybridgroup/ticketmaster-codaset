@@ -125,10 +125,14 @@ module CodasetAPI
   #
   
   class Project < Base
-    
+
     def self.element_path(id, prefix_options = {}, query_options = nil)
-        prefix_options, query_options = split_options(prefix_options) if query_options.nil?
-        "#{prefix(prefix_options)}/#{id}/#{query_string(query_options)}"
+       prefix_options, query_options = split_options(prefix_options) if query_options.nil?
+       "#{prefix(prefix_options)}#{URI.escape id.to_s}.#{format.extension}#{query_string(query_options)}"
+    end
+
+    def element_path(options = nil)
+      self.class.element_path(self.slug, options)
     end
     
     def tickets(options = {})
@@ -150,7 +154,7 @@ module CodasetAPI
   #
   
   class Ticket < Base
-    site_format << '/:slug/'
+    self.site_format << '/:slug/'
   end
     
 end

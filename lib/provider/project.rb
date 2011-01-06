@@ -4,7 +4,7 @@ module TicketMaster::Provider
     #
     #
     class Project < TicketMaster::Provider::Base::Project
-      API = Codaset::Project # The class to access the api's projects
+      API = CodasetAPI::Project # The class to access the api's projects
       # declare needed overloaded methods here
       
       def created_at
