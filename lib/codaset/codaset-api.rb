@@ -139,11 +139,17 @@ module CodasetAPI
    def encode(options={})
      val = []
      attributes.each_pair do |key, value|
-       val << "values[#{URI.escape key}]=#{URI.escape value}"
+       val << "values[#{URI.escape key}]=#{URI.escape value}" rescue nil
      end
      val.join('&')
    end
    
+   def update
+       connection.put(element_path(prefix_options) + '?' + encode, nil, self.class.headers).tap do |response|
+          load_attributes_from_response(response)
+       end
+   end
+  
    def create
       connection.post(collection_path + '?' + encode, nil, self.class.headers).tap do |response|
         self.id = id_from_response(response)
@@ -156,6 +162,7 @@ module CodasetAPI
     def tickets(options = {})
       Ticket.find(:all, :params => options.update(:slug => slug))
     end
+  
   end
   
   # Find tickets
@@ -173,6 +180,39 @@ module CodasetAPI
   
   class Ticket < Base
     self.site_format << '/:slug/'
+    
+     #begin monkey patches
+      def self.element_path(id, prefix_options = {}, query_options = nil)
+         prefix_options, query_options = split_options(prefix_options) if query_options.nil?
+         "#{prefix(prefix_options)}#{collection_name}/#{URI.escape id.to_s}#{query_string(query_options)}"
+      end
+
+      def element_path(options = nil)
+        self.class.element_path(self.id, options)
+      end
+
+     def encode(options={})
+       val = []
+       attributes.each_pair do |key, value|
+         val << "values[#{URI.escape key}]=#{URI.escape value}" rescue nil
+       end
+       val.join('&')
+     end
+
+     def update
+         connection.put(element_path(prefix_options) + '?' + encode, nil, self.class.headers).tap do |response|
+            load_attributes_from_response(response)
+         end
+     end
+
+     def create
+        connection.post(collection_path + '?' + encode, nil, self.class.headers).tap do |response|
+          self.id = id_from_response(response)
+          load_attributes_from_response(response)
+        end
+      end
+
+      #end monkey patches
   end
     
 end

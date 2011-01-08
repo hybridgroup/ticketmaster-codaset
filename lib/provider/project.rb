@@ -27,9 +27,30 @@ module TicketMaster::Provider
         self[:title]
       end
       
+       # Delete this project
+      def destroy
+          result = self.system_data[:client].destroy
+          result.is_a?(Net::HTTPOK)
+      end
+      
       def ticket!(*options)
-        options[0].merge!(:project_id => id) if options.first.is_a?(Hash)
-        self.class.parent::Ticket.create(*options)
+        options[0].merge!(:slug => slug) if options.first.is_a?(Hash)
+        provider_parent(self.class)::Ticket.create(*options)
+      end
+      
+      def tickets(*options)
+        begin 
+        if options.first.is_a? Hash
+          options[0].merge!(:params => {:slug => id})
+          super(*options)
+        elsif options.empty?
+          tickets = CodasetAPI::Ticket.find(:all, :params => {:slug => slug}).collect { |ticket| TicketMaster::Provider::Codaset::Ticket.new ticket }
+        else
+          super(*options)
+        end
+        rescue
+          []
+        end
       end
       
       # copy from this.copy(that) copies that into this
