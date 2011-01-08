@@ -2,18 +2,18 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Ticketmaster::Provider::Codaset::Ticket" do
   before(:all) do
-    headers = {}
+    headers = {'Authorization' => 'OAuth 01234567890abcdef', 'Content-type' => 'application/x-www-form-urlencoded'}
     ActiveResource::HttpMock.respond_to do |mock|
-      mock.get '/foo/my-project/tickets', headers, fixture_for('tickets'), 200
-      mock.get '/foo/my-project/tickets/476816', headers, fixture_for('tickets/476816'), 200
-      mock.put '/foo/my-project/tickets/476816', headers, '', 200
-      mock.post '/foo/my-project/tickets', headers, fixture_for('tickets/create'), 200
+      mock.get '/foo/my-project/tickets.json', headers, fixture_for('tickets'), 200
+      mock.get '/foo/my-project/tickets/476816.json', headers, fixture_for('tickets/476816'), 200
+      mock.put '/foo/my-project/tickets/476816.json', headers, '', 200
+      mock.post '/foo/my-project/tickets.json', headers, fixture_for('tickets/create'), 200
     end
     @project_id = 'my-project'
   end
   
   before(:each) do
-     @ticketmaster = TicketMaster.new(:codaset, :username => 'foo', :password => '000000')
+     @ticketmaster = TicketMaster.new(:codaset, {:username => 'foo', :password => '000000', client_id => '07f16ec71c324ab053885212ad65a6cc', client_secret => '442fe0b16ff1143602e89ea923cbabc50'})
      @project = @ticketmaster.project(@project_id)
      @klass = TicketMaster::Provider::Codaset::Ticket
    end
