@@ -25,9 +25,7 @@ module TicketMaster::Provider
       end
       
       def self.create(*options)
-          puts 'create'
           issue = API.new(options.first.merge!(:state => 'new'))
-          puts issue
           ticket = self.new issue
           issue.save
           ticket
@@ -37,11 +35,6 @@ module TicketMaster::Provider
         self.new API.find(ticket_id)
       end
 
-      def self.find_by_attributes(project_id, attributes = {})
-        tickets = API.find(:all, build_attributes(project_id, attributes))
-        tickets.collect { |issue| self.new issue }
-      end
-      
       def created_at
         @created_at ||= self[:created_at] ? Time.parse(self[:created_at]) : nil
       end
@@ -50,12 +43,8 @@ module TicketMaster::Provider
         @updated_at ||= self[:updated_at] ? Time.parse(self[:updated_at]) : nil
       end
       
-      def slug
-        self.prefix_options[:slug]
-      end
-      
       def id
-        id
+        self[:id].to_i
       end
       
       #TODO?
