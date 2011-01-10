@@ -31,12 +31,6 @@ module TicketMaster::Provider
         self[:title]
       end
       
-       # Delete this project
-      def destroy
-          result = self.system_data[:client].destroy
-          result.is_a?(Net::HTTPOK)
-      end
-      
       def ticket!(*options)
         options[0].merge!(:slug => slug) if options.first.is_a?(Hash)
         provider_parent(self.class)::Ticket.create(*options)

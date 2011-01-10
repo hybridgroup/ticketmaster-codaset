@@ -15,7 +15,8 @@ module TicketMaster::Provider
           object = object.first
           @system_data = {:client => object}
           unless object.is_a? Hash
-            hash = {:title=> object.title,
+            hash = {:id => object.id,
+                    :title => object.title,
                     :description => object.description}
           else
             hash = object
@@ -30,10 +31,23 @@ module TicketMaster::Provider
           issue.save
           ticket
       end
-      
-      def self.find_by_id(project_id, ticket_id)
-        self.new API.find(ticket_id)
+     
+      def self.find_by_id(project_id, id)
+          self.search(project_id, {'id' => id}).first
       end
+      
+      def self.search(project_id, options = {}, limit = 1000)
+          tickets = API.find(:all, :params => {:slug => project_id}).collect { |ticket| self.new ticket}
+          search_by_attribute(tickets, options, limit)
+      end
+      
+      def self.find_by_attributes(project_id, attributes = {})
+         self.search(project_id, attributes)
+      end   
+      
+      #def project_id
+        #self.prefix_options[:slug]
+      #end
 
       def created_at
         @created_at ||= self[:created_at] ? Time.parse(self[:created_at]) : nil
@@ -46,25 +60,7 @@ module TicketMaster::Provider
       def id
         self[:id].to_i
       end
-      
-      #TODO?
-      def comments
-        warn 'Not supported. Perhaps you should leave feedback to request it?'
-        []
-      end
-
-      #TODO?
-      def comment
-        warn 'Not supported. Perhaps you should leave feedback to request it?'
-        nil
-      end
-
-      #TODO?
-      def comment!
-        warn 'Not supported. Perhaps you should leave feedback to request it?'
-        []
-      end
-      
+   
     end
   end
 end
