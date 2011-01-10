@@ -39,7 +39,7 @@ module TicketMaster::Provider
       def tickets(*options)
         begin 
         if options.first.is_a? Hash
-          options[0].merge!(:params => {:slug => slug})
+          #options[0].merge!(:params => {:slug => slug})
           super(*options)
         elsif options.empty?
           tickets = CodasetAPI::Ticket.find(:all, :params => {:slug => slug}).collect { |ticket| TicketMaster::Provider::Codaset::Ticket.new ticket }

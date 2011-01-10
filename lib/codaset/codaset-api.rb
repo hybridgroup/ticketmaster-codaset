@@ -160,6 +160,7 @@ module CodasetAPI
     #end monkey patches
     
     def tickets(options = {})
+      puts 'tickets (codaset-api)'
       Ticket.find(:all, :params => options.update(:slug => slug))
     end
   

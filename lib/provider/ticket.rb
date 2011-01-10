@@ -60,6 +60,23 @@ module TicketMaster::Provider
       def id
         self[:id].to_i
       end
+      
+      def comments
+          warn 'Comments not supported. Perhaps you should leave feedback to request it?'
+          []
+      end
+
+        #TODO?
+      def comment
+          warn 'Comments not supported. Perhaps you should leave feedback to request it?'
+          nil
+      end
+
+        #TODO?
+      def comment!
+          warn 'Comments not supported. Perhaps you should leave feedback to request it?'
+          []
+      end
    
     end
   end
