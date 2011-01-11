@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projects type="array">
 	<project>
-		<bookmark_count>0</bookmark_count>
+		<bookmark_count type="integer">0</bookmark_count>
 		<created-at>2010-12-27T17:49:02Z</created-at>
 		<default_branch>master</default_branch>
 		<description>Testing projects</description>
-		<disk_usage></disk_usage>
+		<disk_usage type="integer"></disk_usage>
 		<externally_forked_from></externally_forked_from>
-		<fork_count>0</fork_count>
+		<fork_count type="integer">0</fork_count>
 		<forked_from></forked_from>
 		<last_pushed_at></last_pushed_at>
 		<owner>
 			<gravatar_id>b64b0e826e9f1ed95c333b58b7d1d90a</gravatar_id>
-			<title>foo</title>
-			<url>http://codaset.com/foo</url>
-			<login>foo</login>
+			<title>anymoto</title>
+			<url>http://codaset.com/anymoto</url>
+			<login>anymoto</login>
 		</owner>
         <slug>my-project</slug>
-		<spam_protection>true</spam_protection>
+		<spam_protection type="boolean">true</spam_protection>
 		<state>public</state>
-		<ticket_count>1<ticket_count>
+		<ticket_count type="integer">3</ticket_count>
 		<title>My project</title>
 		<updated-at>2011-01-10T16:25:21Z</updated-at>
-		<url>http://codaset.com/foo/my-project</url>	
+		<url>http://codaset.com/anymoto/my-project</url>	
+	<project>
+	<project>
+		<bookmark_count type="integer">0</bookmark_count>
+		<created-at>2010-12-27T18:49:02Z</created-at>
+		<default_branch>master</default_branch>
+		<description>This is another project</description>
+		<disk_usage type="integer"></disk_usage>
+		<externally_forked_from></externally_forked_from>
+		<fork_count type="integer">0</fork_count>
+		<forked_from></forked_from>
+		<last_pushed_at></last_pushed_at>
+		<owner>
+				<gravatar_id>b64b0e826e9f1ed95c333b58b7d1d90a</gravatar_id>
+				<title>anymoto</title>
+				<url>http://codaset.com/anymoto</url>
+				<login>anymoto</login>
+		</owner>
+	    <slug>another-project</slug>
+		<spam_protection type="boolean">true</spam_protection>
+		<state>public</state>
+		<ticket_count type="integer">0</ticket_count>
+		<title>Another project</title>
+		<updated-at>2011-01-10T17:25:21Z</updated-at>
+		<url>http://codaset.com/anymoto/another-project</url>	
 	<project>
 </projects>

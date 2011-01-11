@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ticket>
+	<custom_data>
+		<priority>Medium</priority>
+		<type>Bug</type>
+	</custom_data>
+	<created_at>2011-01-04T08:27:21Z</created_at>
+	<title>Second ticket</title>
+	<reported_by>
+		<title>anymoto</title>
+		<last_name>Castro</last_name>
+		<first_name>Ana</first_name>
+		<url>http://codaset.com/anymoto</url>
+		<gravatar_id>b64b0e826e9f1ed95c333b58b7d1d90a</gravatar_id>
+		<login>anymoto</login>
+	</reported_by>
+	<updated_at>2011-01-11T17:25:21Z</updated_at>
+	<votes type="integer">0</votes>
+	<url>http://codaset.com/anymoto/my-project/tickets/2</url>
+	<description>Second ticket for the current project</description>
+	<comments>
+		<count type="integer">0</count>
+	</comments>
+	<milestone></milestone>
+	<state>new</state>
+	<updated_by>
+		<title>anymoto</title>
+		<last_name>Castro</last_name>
+		<first_name>Ana</first_name>
+		<url>http://codaset.com/anymoto</url>
+		<gravatar_id>b64b0e826e9f1ed95c333b58b7d1d90a</gravatar_id>
+		<login>anymoto</login>
+	</updated_by>
+	<assigned_to>
+		<title>anymoto</title>
+		<last_name>Castro</last_name>
+		<first_name>Ana</first_name>
+		<url>http://codaset.com/anymoto</url>
+		<gravatar_id>b64b0e826e9f1ed95c333b58b7d1d90a</gravatar_id>
+		<login>anymoto</login>
+	</assigned_to>
+	<id type="integer">2</id>
+	<project_slug>my-project</project_slug>
+</ticket>
