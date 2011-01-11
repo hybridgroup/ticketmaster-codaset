@@ -17,7 +17,8 @@ module TicketMaster::Provider
           unless object.is_a? Hash
             hash = {:id => object.id,
                     :title => object.title,
-                    :description => object.description}
+                    :description => object.description,
+                    :status => object.state}
           else
             hash = object
           end
@@ -45,10 +46,6 @@ module TicketMaster::Provider
          self.search(project_id, attributes)
       end   
       
-      #def project_id
-        #self.prefix_options[:slug]
-      #end
-
       def created_at
         @created_at ||= self[:created_at] ? Time.parse(self[:created_at]) : nil
       end

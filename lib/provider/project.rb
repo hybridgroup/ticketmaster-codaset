@@ -23,10 +23,6 @@ module TicketMaster::Provider
         self[:slug]
       end
       
-      def identifier
-          self[:identifier]
-      end
-      
       def name
         self[:title]
       end
