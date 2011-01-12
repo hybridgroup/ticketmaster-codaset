@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Ticketmaster::Provider::Codaset::Project" do
   before(:all) do
-    headers = {'Authorization' => 'OAuth 01234567890abcdef', 'Content-type' => 'application/x-www-form-urlencoded'}              
+    headers = {'Authorization' => 'OAuth 01234567890abcdef', 'Content-type' => 'application/x-www-form-urlencoded'}
     @project_id = 'my-project'
     ActiveResource::HttpMock.respond_to do |mock|
       mock.get '/projects.xml', headers, fixture_for('projects'), 200
@@ -14,7 +14,16 @@ describe "Ticketmaster::Provider::Codaset::Project" do
   end
   
   before(:each) do
-    @ticketmaster = TicketMaster.new(:codaset, {:username => 'anymoto', :password => '000000', :client_id => '07f16ec71c324ab053885212ad65a6cc', :client_secret => '442fe0b16ff1143602e89ea923cbabc50'})
+    stubs = Faraday::Adapter::Test::Stubs.new do |stub|
+             ACCESS_TOKEN = {"access_token" => "01234567890abcdef", "refresh_token" => "abcdef01234567890", "expires_in" => "1209600", "username" => "anymoto"} 
+             stub.post('/authorization/token') { [200, {'Content-type' => 'application/x-www-form-urlencoded'}, ACCESS_TOKEN.to_json] }
+     end
+     
+     Faraday.default_connection = Faraday::Connection.new do |builder|
+          builder.adapter :test, stubs
+     end
+
+    @ticketmaster = TicketMaster.new(:codaset, {:username => 'anymoto', :password => '000000', :client_id => '07f16ec71', :client_secret => '442fe0b16'} )
     @klass = TicketMaster::Provider::Codaset::Project
   end
   
