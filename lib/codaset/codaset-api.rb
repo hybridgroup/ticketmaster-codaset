@@ -49,8 +49,7 @@ module CodasetAPI
                                               {:url => master.site, 
                                                :ssl => {:verify => OpenSSL::SSL::VERIFY_NONE,
                                                         :ca_file => nil
-                                                       },
-                                               :adapter => :NetHttp
+                                                       }
                                               },
                                     :authorize_url => @auth_url,
                                     :parse_json => true})
