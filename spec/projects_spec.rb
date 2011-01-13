@@ -2,18 +2,19 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Ticketmaster::Provider::Codaset::Project" do
   before(:all) do
-    headers = {'Authorization' => 'OAuth 01234567890abcdef', 'Content-type' => 'application/x-www-form-urlencoded'}              
+    headers_get = {'Authorization' => 'OAuth 01234567890abcdef', 'Accept' => 'application/json'}  
+    headers = {'Authorization' => 'OAuth 01234567890abcdef', 'Content-Type' => 'application/json'}              
     @project_id = 'my-project'
     ActiveResource::HttpMock.respond_to do |mock|
-      mock.get '/anymoto/projects.json', headers, fixture_for('projects'), 200
-      mock.get '/anymoto/my-project.json', headers, fixture_for('my-project'), 200
-      mock.post '/anymoto/projects.json', headers, fixture_for('projects'), 200
-      mock.put '/anymoto/my-project.json', headers, '', 200
+      mock.get '/anymoto/projects.json', headers_get, fixture_for('projects'), 200
+      mock.get '/anymoto/my-project.json', headers_get, fixture_for('my-project'), 200
+      mock.post "/anymoto/projects.json?values[name]=New%20project", headers, '', 201
+      mock.put "/anymoto/my-project.json?values[slug]=my-project&values[default_branch]=master&values[title]=My%20project&values[url]=http://codaset.com/anymoto/my-project&values[description]=This%20is%20my%20first%20project&values[state]=public", headers, '', 200
       mock.delete '/anymoto/my-project.json', headers, '', 200
     end
 
     stubs = Faraday::Adapter::Test::Stubs.new do |stub|
-      ACCESS_TOKEN = { "access_token" => "01234567890abcdef", "refresh_token" => "01234567890abcdef",    "expires_in" => 1209600, "username" => "myusername" } 
+      ACCESS_TOKEN = { "access_token" => "01234567890abcdef", "refresh_token" => "01234567890abcdef", "expires_in" => 1209600, "username" => "anymoto" } 
       stub.post('/authorization/token') { [200, {}, ACCESS_TOKEN.to_json] }
     end
 
@@ -66,7 +67,7 @@ describe "Ticketmaster::Provider::Codaset::Project" do
   end
   
   it "should be able to create a project" do
-    @project = @ticketmaster.project.create(:name => 'Project #1')
+    @project = @ticketmaster.project.create(:name => 'New project')
     @project.should be_an_instance_of(@klass)
   end
   
