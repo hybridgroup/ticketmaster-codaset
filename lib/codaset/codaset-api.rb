@@ -161,7 +161,7 @@ module CodasetAPI
     
     def tickets(options = {})
       puts 'tickets (codaset-api)'
-      Ticket.find(:all, :params => options.update(:slug => id))
+      Ticket.find(:all, :params => options.update(:slug => slug))
     end
     
     def id
