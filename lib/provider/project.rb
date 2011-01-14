@@ -26,7 +26,7 @@ module TicketMaster::Provider
       def name
         self[:title]
       end
-      
+    
       def ticket!(*options)
         options[0].merge!(:slug => slug) if options.first.is_a?(Hash)
         provider_parent(self.class)::Ticket.create(*options)

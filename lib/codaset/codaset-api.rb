@@ -84,6 +84,7 @@ module CodasetAPI
   
     
   class Base < ActiveResource::Base
+  
       self.format = :json
       self.site = 'https://api.codaset.com'
      
@@ -124,7 +125,7 @@ module CodasetAPI
   #
   
   class Project < Base
-
+     
     #begin monkey patches
     def self.element_path(id, prefix_options = {}, query_options = nil)
        prefix_options, query_options = split_options(prefix_options) if query_options.nil?
@@ -160,9 +161,14 @@ module CodasetAPI
     
     def tickets(options = {})
       puts 'tickets (codaset-api)'
-      Ticket.find(:all, :params => options.update(:slug => slug))
+      Ticket.find(:all, :params => options.update(:slug => id))
     end
+    
+    def id
+      self.slug
+    end 
   
+    
   end
   
   # Find tickets

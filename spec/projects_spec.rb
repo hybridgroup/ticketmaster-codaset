@@ -9,7 +9,7 @@ describe "Ticketmaster::Provider::Codaset::Project" do
       mock.get '/anymoto/projects.json', headers_get, fixture_for('projects'), 200
       mock.get '/anymoto/my-project.json', headers_get, fixture_for('my-project'), 200
       mock.post "/anymoto/projects.json?values[name]=New%20project", headers, '', 201
-      mock.put "/anymoto/my-project.json?values[slug]=my-project&values[default_branch]=master&values[title]=My%20project&values[url]=http://codaset.com/anymoto/my-project&values[description]=This%20is%20my%20first%20project&values[state]=public", headers, '', 200
+      mock.put "/anymoto/my-project.json?values[slug]=my-project&values[title]=My%20project&values[default_branch]=master&values[url]=http://codaset.com/anymoto/my-project&values[description]=This%20is%20my%20first%20project&values[state]=public", headers, '', 200
       mock.delete '/anymoto/my-project.json', headers, '', 200
     end
 
