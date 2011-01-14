@@ -165,9 +165,8 @@ module CodasetAPI
     end
     
     def id
-      self.slug
-    end 
-  
+      @attributes['slug']
+    end
     
   end
   

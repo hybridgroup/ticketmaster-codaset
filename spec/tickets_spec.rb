@@ -9,7 +9,7 @@ describe "Ticketmaster::Provider::Codaset::Ticket" do
       mock.get '/anymoto/my-project.json', headers_get, fixture_for('my-project'), 200
       mock.get '/anymoto/my-project/tickets.json', headers_get, fixture_for('tickets'), 200
       mock.get '/anymoto/my-project/tickets/1.json', headers_get, fixture_for('tickets/1'), 200
-      mock.put '/anymoto/my-project/tickets/1?values[title]=First%20ticket&values[description]=this%20is%20a%20ticket%20created%20on%20tuesday', headers, '', 200
+      mock.put '/anymoto/my-project/tickets/1?values[title]=First%20ticket&values[description]=new%20ticket%20description', headers, '', 200
       mock.post '/anymoto/my-project/tickets.json?values[title]=Ticket%20%2312&values[description]=Body&values[state]=new', headers, fixture_for('new-ticket'), 200
     end
   
@@ -67,8 +67,7 @@ describe "Ticketmaster::Provider::Codaset::Ticket" do
 
    it "should be able to update and save a ticket" do
      @ticket = @project.ticket(1)
-     @ticket.save.should == nil
-     @ticket.description = 'hello'
+     @ticket.description = 'new ticket description'
      @ticket.save.should == true
    end
 
