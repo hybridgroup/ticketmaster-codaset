@@ -18,7 +18,10 @@ module TicketMaster::Provider
             hash = {:id => object.id,
                     :title => object.title,
                     :description => object.description,
-                    :status => object.state}
+                    :status => object.state,
+                    :priority => object.custom_data.Priority,
+                    :assignee => object.assigned_to.title,
+                    :requestor => object.reported_by.title}
           else
             hash = object
           end
@@ -58,6 +61,30 @@ module TicketMaster::Provider
         self[:id].to_i
       end
       
+      def status
+        self[:status]
+      end
+      
+      def priority
+        self[:priority]
+      end
+      
+      def title
+        self[:title]
+      end
+      
+      def description
+        self[:description]
+      end
+      
+      def assignee
+        self[:assignee]
+      end
+      
+      def requestor
+        self[:requestor]
+      end
+    
       def comments
           warn 'Comments not supported. Perhaps you should leave feedback to request it?'
           []
