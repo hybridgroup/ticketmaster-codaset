@@ -14,7 +14,7 @@ describe "Ticketmaster::Provider::Codaset::Project" do
     end
 
     stubs = Faraday::Adapter::Test::Stubs.new do |stub|
-      ACCESS_TOKEN = { "access_token" => "01234567890abcdef", "refresh_token" => "01234567890abcdef", "expires_in" => 1209600, "username" => "anymoto" } 
+      #ACCESS_TOKEN = { "access_token" => "01234567890abcdef", "refresh_token" => "01234567890abcdef", "expires_in" => 1209600, "username" => "anymoto" } 
       stub.post('/authorization/token') { [200, {}, ACCESS_TOKEN.to_json] }
     end
 
@@ -61,8 +61,6 @@ describe "Ticketmaster::Provider::Codaset::Project" do
   it "should be able to update and save a project" do
     @project = @ticketmaster.project(@project_id)
     @project.update!(:short_name => 'some new name').should == true
-    @project.short_name = 'this is a change'
-    @project.save.should == true
   end
   
   it "should be able to create a project" do
