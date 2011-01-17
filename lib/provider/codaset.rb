@@ -12,6 +12,8 @@ module TicketMaster::Provider
     
     # Providers must define an authorize method. This is used to initialize and set authentication
     # parameters to access the API
+    
+    # Client Id and Client Secret: get these values once you register your app on http://api.codaset.com/apps
     def authorize(auth = {})
       @authentication ||= TicketMaster::Authenticator.new(auth)
       auth = @authentication

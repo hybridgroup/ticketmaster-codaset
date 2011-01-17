@@ -40,7 +40,8 @@ module CodasetAPI
       end
       @account = name
     end
-    
+
+     # Gets the OAuth2's access token    
     def access_token(master)
       @auth_url = '/authorization/token'
       consumer = OAuth2::Client.new(master.client_id,
@@ -65,6 +66,7 @@ module CodasetAPI
     
     end
        
+     # Sets the OAuth2's access token, and updates the headers in the resources 
     def token=(value)
       resources.each do |klass|
         klass.headers['Authorization'] = 'OAuth ' + value.to_s
