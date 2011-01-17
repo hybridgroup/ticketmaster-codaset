@@ -16,7 +16,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/hybridgroup/ticketmaster-codaset"
   gem.license = "MIT"
   gem.summary = %Q{The codaset provider for ticketmaster}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.description = %Q{Allows ticketmaster to interact with Your System.}
   gem.email = "ana@hybridgroup.com"
   gem.authors = ["anymoto"]
   gem.add_development_dependency "rspec", ">= 1.2.9"
