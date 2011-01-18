@@ -1,0 +1,5 @@
+Version 0.1.1
+	update dependencies version
+
+Version 0.1.2
+	delete duplicated dependencies

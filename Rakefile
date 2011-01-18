@@ -20,7 +20,7 @@ Jeweler::Tasks.new do |gem|
   gem.email = "ana@hybridgroup.com"
   gem.authors = ["anymoto"]
   gem.add_development_dependency "rspec", ">= 1.2.9"
-  gem.add_dependency "ticketmaster", ">= 0.5.2"
+  gem.add_dependency "ticketmaster", "0.5.2"
   gem.add_dependency "activesupport", ">= 2.3.0"
   gem.add_dependency "activeresource", ">= 2.3.0"
 end

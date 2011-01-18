@@ -1,5 +1,7 @@
 source "http://rubygems.org"
 
+gemspec
+
 gem 'ticketmaster', '0.5.2'
 gem 'oauth2'
 
