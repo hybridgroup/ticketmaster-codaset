@@ -73,6 +73,10 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_runtime_dependency(%q<ticketmaster>, ["= 0.5.2"])
+      s.add_runtime_dependency(%q<activesupport>, [">= 2.3.0"])
+      s.add_runtime_dependency(%q<activeresource>, [">= 2.3.0"])
     else
       s.add_dependency(%q<ticketmaster>, ["= 0.5.2"])
       s.add_dependency(%q<oauth2>, [">= 0"])
@@ -80,6 +84,10 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_dependency(%q<ticketmaster>, ["= 0.5.2"])
+      s.add_dependency(%q<activesupport>, [">= 2.3.0"])
+      s.add_dependency(%q<activeresource>, [">= 2.3.0"])
     end
   else
     s.add_dependency(%q<ticketmaster>, ["= 0.5.2"])
@@ -88,6 +96,10 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
     s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 1.2.9"])
+    s.add_dependency(%q<ticketmaster>, ["= 0.5.2"])
+    s.add_dependency(%q<activesupport>, [">= 2.3.0"])
+    s.add_dependency(%q<activeresource>, [">= 2.3.0"])
   end
 end
 
