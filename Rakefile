@@ -13,16 +13,16 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "ticketmaster-codaset"
-  gem.homepage = "http://github.com/hybridgroup/ticketmaster-codaset"
-  gem.license = "MIT"
-  gem.summary = %Q{The codaset provider for ticketmaster}
+  gem.homepage = "http://ticket.rb"
+  gem.summary = %Q{This is a ticketmaster provider for interacting with Codaset}
   gem.description = %Q{Allows ticketmaster to interact with Codaset.}
   gem.email = "ana@hybridgroup.com"
-  gem.authors = ["anymoto"]
+  gem.authors = ["HybridGroup"]
   gem.add_development_dependency "rspec", ">= 1.2.9"
   gem.add_dependency "ticketmaster", "0.5.2"
   gem.add_dependency "activesupport", ">= 2.3.0"
   gem.add_dependency "activeresource", ">= 2.3.0"
+  gem.add_dependency "oauth2"
 end
 Jeweler::RubygemsDotOrgTasks.new
 
