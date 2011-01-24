@@ -3,3 +3,6 @@ Version 0.1.1
 
 Version 0.1.2
 	delete duplicated dependencies
+
+Version 0.1.3
+    Ticket attributes updated 
