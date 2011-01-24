@@ -1,5 +1,8 @@
 source "http://rubygems.org"
 
+gem "ticketmaster", "0.5.2"
+gem "oauth2"
+
 group :development do
   gem "rspec", ">= 1.2.9"
   gem "bundler", "~> 1.0.0"

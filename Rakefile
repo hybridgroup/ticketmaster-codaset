@@ -18,11 +18,8 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Allows ticketmaster to interact with Codaset.}
   gem.email = "ana@hybridgroup.com"
   gem.authors = ["HybridGroup"]
-  gem.add_development_dependency "rspec", ">= 1.2.9"
-  gem.add_dependency "ticketmaster", "0.5.2"
   gem.add_dependency "activesupport", ">= 2.3.0"
   gem.add_dependency "activeresource", ">= 2.3.0"
-  gem.add_dependency "oauth2"
 end
 Jeweler::RubygemsDotOrgTasks.new
 
