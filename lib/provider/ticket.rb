@@ -1,7 +1,6 @@
 module TicketMaster::Provider
   module Codaset
     # Ticket class for ticketmaster-codaset
-    # * project_id (prefix_options[:project_id])
     
      API = CodasetAPI::Ticket # The class to access the api's tickets
     
@@ -12,16 +11,18 @@ module TicketMaster::Provider
       
       def initialize(*object)
         if object.first
-          object = object.first
+          args = object
+          object = args.shift
+          project_id = args.shift
           @system_data = {:client => object}
           unless object.is_a? Hash
             hash = {:id => object.id,
                     :title => object.title,
                     :description => object.description,
                     :status => object.state,
-                    :priority => object.custom_data.Priority,
-                    :assignee => object.assigned_to.title,
-                    :requestor => object.reported_by.title}
+                    :created_at => object.created_at,
+                    :updated_at => object.updated_at,
+                    :project_id => project_id}
           else
             hash = object
           end
@@ -29,8 +30,10 @@ module TicketMaster::Provider
         end
       end
       
-      def self.create(*options)
-          issue = API.new(options.first.merge!(:state => 'new'))
+      def self.create(*options) 
+          issue = API.new(options.first.merge!(:state => 'new', 
+                                               :created_at => Time.now,
+                                               :updated_at => Time.now))
           ticket = self.new issue
           issue.save
           ticket
@@ -41,13 +44,17 @@ module TicketMaster::Provider
       end
       
       def self.search(project_id, options = {}, limit = 1000)
-          tickets = API.find(:all, :params => {:slug => project_id}).collect { |ticket| self.new ticket}
+          tickets = API.find(:all, :params => {:slug => project_id}).collect { |ticket| self.new ticket, project_id }
           search_by_attribute(tickets, options, limit)
       end
       
       def self.find_by_attributes(project_id, attributes = {})
          self.search(project_id, attributes)
       end   
+      
+      def project_id
+        self[:project_id]
+      end
       
       def created_at
         @created_at ||= self[:created_at] ? Time.parse(self[:created_at]) : nil
@@ -65,10 +72,6 @@ module TicketMaster::Provider
         self[:status]
       end
       
-      def priority
-        self[:priority]
-      end
-      
       def title
         self[:title]
       end
@@ -77,14 +80,6 @@ module TicketMaster::Provider
         self[:description]
       end
       
-      def assignee
-        self[:assignee]
-      end
-      
-      def requestor
-        self[:requestor]
-      end
-    
       def comments
           warn 'Comments not supported. Perhaps you should leave feedback to request it?'
           []
