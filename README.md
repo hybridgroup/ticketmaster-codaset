@@ -5,6 +5,7 @@ This is a provider for [ticketmaster](http://ticketrb.com). It provides interope
 # Usage and Examples
 
 First we have to instantiate a new ticketmaster instance:
+
     codaset = TicketMaster.new(:codaset, {:username => "foo", :password => "bar", :client_id => "your_client_id", :client_secret => "your_client_secret"})
 
 If you do not pass in username, password, client id and client secret you won't get any information.
@@ -26,7 +27,7 @@ You can find your own projects by doing:
     
 	ticket = project.ticket!({:title=> "New ticket", :description=> "Body for the very new ticket"})
 
-= Update a ticket
+== Update a ticket
 	
 	ticket.title = "New title"
 	ticket.description =  "New Description"
@@ -60,4 +61,4 @@ If you see or find any issues, feel free to open up an issue report.
 
 ## Copyright
 
-Copyright (c) 2010 [Hybrid Group](http://hybridgroup.com). See LICENSE for details.
+Copyright (c) 2011 [Hybrid Group](http://hybridgroup.com). See LICENSE for details.
