@@ -2,8 +2,8 @@ module TicketMaster::Provider
   # This is the Codaset Provider for ticketmaster
   module Codaset
     include TicketMaster::Provider::Base
-    TICKET_API = Codaset::Ticket # The class to access the api's tickets
-    PROJECT_API = Codaset::Project # The class to access the api's projects
+    TICKET_API = CodasetAPI::Ticket # The class to access the api's tickets
+    PROJECT_API = CodasetAPI::Project # The class to access the api's projects
     
     # This is for cases when you want to instantiate using TicketMaster::Provider::Codaset.new(auth)
     def self.new(auth = {})
@@ -25,6 +25,15 @@ module TicketMaster::Provider
     end
     
     # declare needed overloaded methods here
+    #
+    def valid?
+      begin
+        PROJECT_API.find(:first)
+        true
+      rescue
+        false
+      end
+    end
     
   end
 end
