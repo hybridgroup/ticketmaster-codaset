@@ -13,7 +13,7 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "ticketmaster-codaset"
-  gem.homepage = "http://ticket.rb"
+  gem.homepage = "http://ticketrb.com"
   gem.summary = %Q{This is a ticketmaster provider for interacting with Codaset}
   gem.description = %Q{Allows ticketmaster to interact with Codaset.}
   gem.email = "ana@hybridgroup.com"
