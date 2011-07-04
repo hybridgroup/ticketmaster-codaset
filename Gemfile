@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "ticketmaster", "0.5.2"
+gem "ticketmaster", "0.6.6"
 gem "oauth2"
 
 group :development do
